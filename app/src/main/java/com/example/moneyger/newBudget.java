@@ -3,6 +3,7 @@ package com.example.moneyger;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +38,18 @@ public class newBudget extends Fragment {
         saveBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name = budgetName.getText().toString();
-                value = Integer.valueOf( budgetValue.getText().toString());
-
-                savedBudget budget = new savedBudget(name, value);
-
-                showToast();
+                if (TextUtils.isEmpty(budgetName.getText().toString()) || budgetName.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "Please input the budget name", Toast.LENGTH_SHORT).show();
+                } else {
+                    name = budgetName.getText().toString();
+                    if (TextUtils.isEmpty(budgetValue.getText().toString())) {
+                        Toast.makeText(getActivity(), "Please input the budget value", Toast.LENGTH_SHORT).show();
+                    } else {
+                        value = Integer.parseInt( budgetValue.getText().toString());
+                        savedBudget budget = new savedBudget(name, value);
+                        showToast();
+                    }
+                }
             }
         });
 
